@@ -1,0 +1,1 @@
+var baseUrl = 'https://www.tuiguangbo.com/'

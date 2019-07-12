@@ -1,0 +1,195 @@
+.iframe {
+    width: 100%;
+    height: calc(100% - 55px);
+}
+
+div, textarea {
+    box-sizing: border-box;
+}
+
+input {
+    background: none;
+}
+
+.activity-img {
+    width: 100px;
+    height: 60px;
+}
+
+.operation button {
+    height: 30px;
+    line-height: 30px;
+    display: block;
+    margin: auto;
+}
+
+.operation>.delete {
+    margin: 0 auto;
+    margin-top: 8px;
+}
+
+#edit-modal .item, .common .item {
+    display: flex;
+    padding: 14px 0;
+    align-items: center;
+}
+
+.content-right.common {
+    padding: 40px;
+}
+
+.content-right.common .title {
+    color: #00B4FF;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.scroll-content {
+    height: 450px;
+}
+
+.content-right.common .title span {
+    color: red;
+}
+
+#edit-modal .item label, .common .item label {
+    width: 100px;
+    flex-shrink: 0;
+}
+
+#edit-modal .content {
+    padding: 30px 55px 55px;
+}
+
+#edit-modal .layui-upload-file {
+
+}
+
+.layui-upload-img {
+    width: 100px;
+    height: 60px;
+}
+
+#edit-modal .content input {
+    flex-grow: 1;
+    height: 28px;
+    padding: 0 10px;
+    border: 1px solid #dedede;
+}
+
+.common .item input {
+    width: 260px;
+    height: 28px;
+    flex-shrink: 0;
+    padding: 0 10px;
+    border: 1px solid #dedede;
+}
+
+#edit-modal .content .layui-input-inline {
+    flex-grow: 1;
+    height: 28px;
+}
+
+#edit-modal .content .layui-input-inline input {
+    border: 1px solid #dedede;
+}
+
+.save {
+    float: right;
+}
+/*注册 start*/
+.register {
+    width: 400px;
+    margin: 0 auto;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    margin-top: 40px;
+}
+
+.register .title {
+    height: 40px;
+    line-height: 40px;
+    background-color: #dedede;
+    text-align: center;
+    color: #000;
+}
+
+.register .content {
+    padding: 0 40px 40px;
+}
+
+.register .content .item {
+    display: flex;
+    padding: 8px 0;
+    margin: 15px 10px;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+}
+
+.register .content .item i {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.register .content .item input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+}
+
+.register .code {
+    border: none;
+    width: 150px;
+    text-align: center;
+    background: transparent;
+    color: #00B4FF;
+    border-left: 1px solid #00B4FF;
+}
+
+.register .reg-btn {
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    color: #fff;
+    background-color: #00B4FF;
+    margin-bottom: 10px;
+}
+
+.register span {
+    float: right;
+}
+
+/*注册end*/
+
+.reg-type {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.reg-type .title {
+    padding-top: 200px;
+}
+
+.reg-type .type {
+    display: flex;
+    justify-content: center;
+}
+
+.reg-type .type div {
+    width: 80px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.reg-type .title {
+    font-size: 20px;
+    color: #00B4FF;
+}
+
+
+.layui-upload-list {
+    border: 1px solid #dedede;
+}

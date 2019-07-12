@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <title>主办方后台</title>
+  <link rel="stylesheet" href="layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="assets/css/common.css" media="all">
+    <link rel="stylesheet" href="assets/css/activity.css" media="all">
+</head>
+<style type="text/css" id="LAY_layadmin_theme"></style>
+<body>
+<div id="LAY_WRAP">
+  <div id='LAY_app' class="layui-side layui-bg-black">
+      <div class="layui-side-scroll">
+          <div class="layui-logo" lay-href=""> <span>主办方</span> </div>
+          <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+          <ul class="layui-nav layui-nav-left layui-nav-tree" lay-filter="layui-nav-left">
+              <li class="layui-nav-item layui-nav-itemed">
+                  <a class="" href="javascript:;"><i class="layui-icon layui-icon-face-smile"></i> <cite >活动管理</cite></a>
+                  <dl class="layui-nav-child">
+                      <dd><a href="javascript:;" class="site-demo-active" onclick="toPages('./pages/activity/editAcivity.html')"> <cite >编辑活动</cite></a></dd>
+                      <dd><a href="javascript:;" onclick="toPages('./pages/activity/editTicket.html')"> <cite >编辑票样</cite></a></dd>
+                  </dl>
+              </li>
+              <li class="layui-nav-item layui-nav-itemed">
+                  <a href="javascript:;"><i class="layui-icon layui-icon-face-smile"></i> <cite >机构管理</cite></a>
+                  <dl class="layui-nav-child">
+                      <dd><a href="javascript:;" onclick="toPages('./pages/company/certifiedCompany.html')"> <cite >编辑认证信息</cite></a></dd>
+                      <dd><a href="javascript:;" onclick="toPages('./pages/company/editCompany.html')"> <cite >编辑公司信息</cite></a></dd>
+                  </dl>
+              </li>
+              <li class="layui-nav-item">
+                  <a href="javascript:;"><i class="layui-icon layui-icon-face-smile"></i> <cite >草稿箱</cite></a>
+              </li>
+          </ul>
+      </div>
+  </div>
+
+  <!--主体-->
+  <div class="layui-body" id="LAY_app_body">
+    <div class="layui-header">
+          <!-- 头部区域 -->
+<!--          <ul class="layui-nav layui-layout-left" lay-filter="layadmin-layout-left">-->
+<!--            <li class="layui-nav-item layadmin-flexible" lay-unselect="">-->
+<!--              <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">-->
+<!--                <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--            <li class="layui-nav-item" lay-unselect="">-->
+<!--              <a href="javascript:;" layadmin-event="refresh" title="刷新">-->
+<!--                <i class="layui-icon layui-icon-refresh-3"></i>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
+<!--              <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="template/search/keywords="> -->
+<!--            </li>-->
+<!--        </ul>-->
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect="">
+              <a href="javascript:;" layadmin-event="theme">
+                <i class="layui-icon layui-icon-theme"></i>
+              </a>
+            </li>
+            <li class="layui-nav-item" lay-unselect="">
+              <a href="javascript:;"> <span>Choutest</span> <span class="layui-nav-more"></span></a>
+              <dl class="layui-nav-child">
+                  <dd><a lay-href="set/user/info">基本资料</a></dd>
+                  <dd><a lay-href="set/user/password">修改密码</a></dd>
+                  <hr>
+                  <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+              </dl>
+            </li>
+        </ul>
+      </div>
+      <iframe class="iframe" src="" frameborder="0"></iframe>
+  </div>
+</div>
+<!--用于选色效果-->
+<div id='setbgcolor' style="display:none">
+  <div class="layui-layer-shade" id="setbgcolorshade" style="z-index: 19891016; background-color: rgb(0, 0, 0); opacity: 0.3;"></div>
+  <div class="layui-layer-color">
+      <div class='layui-layer-content'>
+        <div class="layui-card-header"> 配色方案 </div>
+        <div class="layui-card-body layadmin-setTheme">
+          <ul class="layadmin-setTheme-color" id='ChangeColor'>
+              <li layadmin-event="setTheme" data-index="0" data-alias="default" title="default">
+                  <div class="layadmin-setTheme-header">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #20222A;">
+                      <div class="layadmin-setTheme-logo">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="1" data-alias="dark-blue" title="dark-blue">
+                  <div class="layadmin-setTheme-header">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #03152A;">
+                      <div class="layadmin-setTheme-logo">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="2" data-alias="coffee" title="coffee">
+                  <div class="layadmin-setTheme-header">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #2E241B;">
+                      <div class="layadmin-setTheme-logo">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="3" data-alias="purple-red" title="purple-red">
+                  <div class="layadmin-setTheme-header">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #50314F;">
+                      <div class="layadmin-setTheme-logo">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="4" data-alias="ocean" title="ocean">
+                  <div class="layadmin-setTheme-header">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #344058;">
+                      <div class="layadmin-setTheme-logo" style="background-color: #1E9FFF;">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="5" data-alias="green" title="green">
+                  <div class="layadmin-setTheme-header">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #3A3D49;">
+                      <div class="layadmin-setTheme-logo" style="background-color: #2F9688;">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="6" data-alias="red" title="red">
+                  <div class="layadmin-setTheme-header">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #20222A;">
+                      <div class="layadmin-setTheme-logo" style="background-color: #F78400;">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="7" data-alias="fashion-red"
+              title="fashion-red">
+                  <div class="layadmin-setTheme-header">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #28333E;">
+                      <div class="layadmin-setTheme-logo" style="background-color: #AA3130;">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="8" data-alias="classic-black"
+              title="classic-black">
+                  <div class="layadmin-setTheme-header">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #24262F;">
+                      <div class="layadmin-setTheme-logo" style="background-color: #3A3D49;">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="9" data-alias="green-header"
+              title="green-header">
+                  <div class="layadmin-setTheme-header" style="background-color: #2F9688;">
+                  </div>
+                  <div class="layadmin-setTheme-side">
+                      <div class="layadmin-setTheme-logo" style="background-color: #226A62;">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="10" data-alias="ocean-header"
+              title="ocean-header">
+                  <div class="layadmin-setTheme-header" style="background-color: #1E9FFF;">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #344058;">
+                      <div class="layadmin-setTheme-logo" style="background-color: #0085E8;">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="11" data-alias="classic-black-header"
+              title="classic-black-header">
+                  <div class="layadmin-setTheme-header" style="background-color: #393D49;">
+                  </div>
+                  <div class="layadmin-setTheme-side">
+                      <div class="layadmin-setTheme-logo">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="12" data-alias="purple-red-header"
+              title="purple-red-header">
+                  <div class="layadmin-setTheme-header" style="background-color: #50314F;">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #50314F;">
+                      <div class="layadmin-setTheme-logo" style="background-color: #50314F;">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="13" data-alias="fashion-red-header"
+              title="fashion-red-header">
+                  <div class="layadmin-setTheme-header" style="background-color: #AA3130;">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #28333E;">
+                      <div class="layadmin-setTheme-logo" style="background-color: #28333E;">
+                      </div>
+                  </div>
+              </li>
+              <li layadmin-event="setTheme" data-index="14" data-alias="green-header"
+              title="green-header">
+                  <div class="layadmin-setTheme-header" style="background-color: #009688;">
+                  </div>
+                  <div class="layadmin-setTheme-side" style="background-color: #28333E;">
+                      <div class="layadmin-setTheme-logo" style="background-color: #009688;">
+                      </div>
+                  </div>
+              </li>
+          </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!--辅助作用一般用于手机遮罩层-->
+<div class="layui-layer-shade mobilenav" id="mobilenav" onClick="clearmobilenav()" style="z-index: 998; background-color: rgb(0, 0, 0); opacity: 0.3;display:none"></div>
+
+</body>
+<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript" src="assets/js/common.js"></script>
+<script type="text/javascript" src="assets/js/activity.js"></script>
+<script type="text/javascript">
+    // window.onbeforeunload = onbeforeunload_handler;
+    // function onbeforeunload_handler(){
+    //     // document.getElementsByClassName('iframe').contentWindow.location.reload(true);
+    //     return true;
+    // }
+    function toPages(e) {
+        $(".iframe").attr('src',e)
+    }
+</script>
+</html>

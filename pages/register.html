@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <title>商家后台管理</title>
+    <link rel="stylesheet" href="../layui/css/layui.css?t=2" media="all">
+    <link rel="stylesheet" href="../assets/css/common.css?t=2" media="all">
+    <link rel="stylesheet" href="../assets/css/activity.css" media="all">
+</head>
+<style type="text/css" id="LAY_layadmin_theme"></style>
+<body>
+<div class="reg-type">
+    <div class="title">请选择注册类型</div>
+    <div class="type">
+        <div id="institutions" onclick="institut('a')">机构注册</div>
+        <div id="employees" onclick="employ('b')">员工注册</div>
+    </div>
+</div>
+<div class="register">
+    <div class="title">机构注册</div>
+    <div class="content" id="reg-form">
+        <input type="text" style="display: none;">
+        <div class="item">
+            <i class="layui-icon layui-icon-cellphone"></i>
+            <input class="tel-val" type="text" name="telphone" placeholder="请输入手机号">
+        </div>
+        <div class="item">
+            <i class="layui-icon layui-icon-vercode"></i>
+            <input class="code-val" type="text" name="code" placeholder="请输入验证码">
+            <button id="btn" class="code" onclick="sendemail()">发送验证码</button>
+        </div>
+        <div class="item">
+            <i class="layui-icon layui-icon-password"></i>
+            <input class="pwd-val" type="password" name="password" placeholder="请输入密码">
+        </div>
+        <div class="item">
+            <i class="layui-icon layui-icon-password"></i>
+            <input class="re-pwd" type="password" placeholder="请再次输入密码">
+        </div>
+        <div class="reg-btn" onclick="register()">注册</div>
+        <span onclick="toLogin()">已有账号，去登录</span>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../layui/layui.js?t=2"></script>
+<script type="text/javascript" src="../assets/js/common.js?t=2"></script>
+<script type="text/javascript">
+    var countdown=60;
+    function sendemail(){
+        var obj = $("#btn");
+        settime(obj);
+    }
+    function settime(obj) { //发送验证码倒计时
+        if (countdown == 0) {
+            obj.attr('disabled',false);
+            //obj.removeattr("disabled");
+            obj.text("发送验证码");
+            countdown = 60;
+            return;
+        } else {
+            obj.attr('disabled',true);
+            obj.text("重新发送(" + countdown + ")");
+            countdown--;
+        }
+        setTimeout(function() {
+                settime(obj) }
+            ,1000)
+    }
+     // 注册
+    function register() {
+        // console.log(decodeURIComponent($("#reg-form").serialize(),true))
+        var tel = $(".tel-val").val()
+        var code = $(".code-val").val()
+        var pwd = $(".pwd-val").val()
+        var repwd = $(".re-pwd").val()
+        if (!(/(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/.test(tel))) {
+            layer.msg('请输入正确手机号');
+        } else if (code == "" || code == null) {
+            layer.msg('请输入验证码');
+        } else if (pwd == "" || pwd == null) {
+            layer.msg('请输入密码');
+        } else if (repwd !== pwd) {
+            layer.msg('请输入相同密码');
+        } else {
+            console.log('提交')
+            window.location.href="./login.html"
+            var data = {
+                telphone: tel,
+                code: code,
+                password: pwd
+            }
+            // $.ajax({
+            //     type:"post",
+            //     url:"http://192.168.2.173/user/login",
+            //     data: data,
+            //     dataType:'json',
+            //     crossDomain: true,
+            //     success:function(data){
+            //         console.log('***********')
+            //         console.log(data);
+            //     },
+            //     error:function(){
+            //         console.log('失败');
+            //     }
+            // });
+        }
+    }
+//    去登录
+    function toLogin() {
+        window.location.href="./login.html"
+    }
+//    机构注册
+    function institut(type) {
+        console.log(type)
+        if (type == 'a') {
+            $(".register .title").text('机构注册')
+        }
+        // $(".register").css("display",'block')
+    }
+    //    员工注册
+    function employ(type) {
+        console.log(type)
+        if (type == 'b') {
+            $(".register .title").text('员工注册')
+        }
+        // $(".register").css("display",'block')
+    }
+</script>
+</html>

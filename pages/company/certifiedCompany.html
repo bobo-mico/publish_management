@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <title>商家后台管理</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css?t=2" media="all">
+    <link rel="stylesheet" href="../../assets/css/common.css?t=2" media="all">
+    <link rel="stylesheet" href="../../assets/css/activity.css" media="all">
+</head>
+<style type="text/css" id="LAY_layadmin_theme"></style>
+<body>
+<form class="content-right common" id="company">
+    <div class="title">公司信息：<span>温馨提示：公司名称，公司地址上传后，不可修改</span></div>
+    <div class="item">
+        <label id="test1">上传图片</label>
+        <!--            <div class="layui-upload-list">-->
+        <!--                <img class="layui-upload-img" id="demo1" name="img">-->
+        <!--                <p id="demoText"></p>-->
+        <!--            </div>-->
+        <div class="layui-upload-list" id="upload">
+            <img class="layui-upload-img" alt="" id="img" name="file">
+        </div>
+        <input type="file" id="file" name="file" style="display: none">
+        <input type="text" name="which" id="which" value="" style="display: none">
+    </div>
+    <div class="item">
+        <label>公司名称</label>
+        <input type="text" id="name" name="name" placeholder="请输入公司名称">
+    </div>
+    <div class="item">
+        <label>公司类型</label>
+        <input type="text" id="company-type" name="companyTypeId" placeholder="请输入公司类型">
+    </div>
+<!--    <div class="item">-->
+<!--        <label>公司网址</label>-->
+<!--        <input type="text" id="company_website" name="companyWebsite" placeholder="请输入公司网址">-->
+<!--    </div>-->
+    <div class="item">
+        <label>公司地点</label>
+        <input type="text" id="company_address" name="companyAddress" placeholder="请输入公司地点">
+    </div>
+    <div class="item">
+        <label>公司电话</label>
+        <input type="text" id="elephone_no" name="telephoneNo" placeholder="请输入公司电话">
+    </div>
+    <div class="item">
+        <label>公司介绍</label>
+<!--        <input type="text" id="companyIntro" name="companyIntro" placeholder="请输入公司电话">-->
+        <textarea name="companyIntro" id="companyIntro" style="width:100%;padding:8px;" rows="10" placeholder="请输入公司介绍"></textarea>
+    </div>
+    <button type="button" data-id="b" onclick="editInfo()" class="layui-btn layui-btn-normal edit">保存</button>
+</form>
+</body>
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../layui/layui.js?t=2"></script>
+<script type="text/javascript" src="../../assets/js/common.js?t=2"></script>
+<script type="text/javascript">
+    $(function(){
+        //上传图片
+        $("#upload").click(function() {
+            $("#file").trigger("click");
+            //   按钮已隐藏  点击div upload如点击file按钮
+        });
+        $('#file').change(function () {
+            var imgs = $('#file').get(0).files[0];
+            var src=window.URL.createObjectURL(imgs);
+            $("#img").attr("src",src);
+            var formData = new FormData();//新建一个formData来储存需要传递的信息
+            formData.append('upload_file', imgs);//需要传递的字段image路径
+            var which = Math.floor(Math.random () * 900) + 100
+            console.log(which)
+            formData.append('which', which);//id
+            $("#which").val(which)
+            $.ajax({
+                type: 'post',
+                url: 'http://192.168.2.173/apis/activity/activity/upload_image',
+                // headers: {
+                //     'yl-authorization': obj.mobile
+                // },
+                data: formData,
+                contentType:false,
+                processData:false,
+                dataType: 'json',
+                success: function (data) {
+                    layer.msg('上传成功');
+                    $("#which").val(which)
+                },
+                error: function () {
+                    layer.msg('上传失败');
+                }
+            });
+        });
+    })
+
+    function editInfo() {
+        var name = $("#name").val()
+        // var company_website = $("#company_website").val()
+        var company_address = $("#company_address").val()
+        var elephone_no = $("#elephone_no").val()
+        var company_type = $("#company-type").val()
+        console.log(elephone_no)
+        var rex = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
+        var rex2 = /^(\(\d{3,4}\)|\d{3,4}-)?\d{7,8}$/;
+
+        if (name == "" || name == null) {
+            layer.msg('请输入公司名称');
+        }else if (company_type == "" || company_type == null) {
+            layer.msg('请输入公司类型');
+        } else if (company_address == "" || company_address == null) {
+            layer.msg('请输入地址');
+        } else if (rex.test(elephone_no) || rex2.test(elephone_no)) {
+            console.log('提交')
+            console.log(decodeURIComponent($("#company").serialize(),true))
+            $.ajax({
+                // contentType: 'application/json',
+                xhrFields: {
+                    withCredentials: true
+                },
+                type:"post",
+                url:"http://192.168.2.173/apis/company/normal/upload_info_auth",
+                data: decodeURIComponent($("#company").serialize(),true),
+                dataType:'json',
+                crossDomain: true,
+                success:function(data){
+                    console.log('***********')
+                    console.log(data);
+                    layer.msg('保存成功');
+                },
+                error:function(){
+                    console.log('失败');
+                    layer.msg('保存失败');
+                }
+            });
+        } else {
+            layer.msg('请输入正确的号码');
+        }
+    }
+</script>
+</html>

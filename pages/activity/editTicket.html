@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <title>编辑票样</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css?t=2" media="all">
+    <link rel="stylesheet" href="../../assets/css/common.css?t=2" media="all">
+    <link rel="stylesheet" href="../../assets/css/activity.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-form">
+        <table class="layui-table">
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="200">
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th>类型</th>
+                <th>价格</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>儿童教育</td>
+                <td>1元</td>
+                <td class="operation">
+                    <button type="button" data-id="a" onclick="editTicket()" class="layui-btn layui-btn-normal edit">编辑</button>
+                    <button type="button" onclick="deleteTicket(this)" class="layui-btn layui-btn-primary delete">删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>成人教育</td>
+                <td>免费</td>
+                <td class="operation">
+                    <button type="button" data-id="b" onclick="editTicket()" class="layui-btn layui-btn-normal edit">编辑</button>
+                    <button type="button" onclick="deleteTicket(this)" class="layui-btn layui-btn-primary delete">删除</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--编辑活动模态框-->
+<div id="edit-modal" style="display: none;">
+    <form class="content">
+        <div class="item">
+            <label>类型</label>
+            <input autocomplete="off" type="text" name="b" placeholder="请输入类型" value="">
+        </div>
+        <div class="item">
+            <label>价格</label>
+            <input autocomplete="off" type="text" name="s" placeholder="请输入地点" value="免费">
+        </div>
+        <div type="button" onclick="submit()" class="layui-btn layui-btn-normal save">保存</div>
+    </form>
+</div>
+</body>
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../layui/layui.js?t=2"></script>
+<script type="text/javascript" src="../../assets/js/common.js?t=2"></script>
+<script type="text/javascript" src="../../assets/js/activity.js"></script>
+<script type="text/javascript">
+    //编辑活动
+    function editTicket(){
+        // $("[name='testname']").val("xxxxxxxxxxxxxxx");//向模态框中赋值
+        layui.use(['layer'],function () {
+            var layer = layui.layer,$=layui.$;
+            layer.open({
+                type:1,//类型
+                area:['500px',''],//定义宽和高
+                title:'编辑活动',//题目
+                shadeClose:false,//点击遮罩层关闭
+                content: $('#edit-modal')//打开的内容
+            });
+        })
+    }
+    //删除活动
+    function deleteTicket(e){
+        //询问框
+
+        layer.confirm('您确定删除吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            layer.msg('删除成功');
+            $(e).parent().parent().remove();
+            return ;
+        });
+
+        //询问框
+        // layer.confirm('您确定删除本条记录？', {
+        //     btn: ['确定','取消'] //按钮
+        // }, function(){
+        //     $(e).parent().parent().remove();
+        // });
+    }
+</script>
+</html>

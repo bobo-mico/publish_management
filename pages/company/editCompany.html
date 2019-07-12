@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <title>商家后台管理</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css?t=2" media="all">
+    <link rel="stylesheet" href="../../assets/css/common.css?t=2" media="all">
+    <link rel="stylesheet" href="../../assets/css/activity.css" media="all">
+
+    <style type="text/css">
+        .group .items, .welfare {
+            width: 690px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .group .items input{
+            display: block;
+            width: 500px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #dedede;
+            margin-bottom: 10px;
+            padding: 0 10px;
+        }
+
+        .welfare input[name="welfarename"]{
+               display: block;
+               width: 500px;
+               height: 30px;
+               line-height: 30px;
+               border: 1px solid #dedede;
+               margin-bottom: 10px;
+               padding: 0 10px;
+        }
+
+        .welfare input[name="welfareprice"]{
+            display: block;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #dedede;
+            margin-bottom: 10px;
+            padding: 0 10px;
+        }
+
+        .group .left .name, .welfare .left .name {
+            display: flex;
+        }
+        .group .left .name label, .welfare .left .name label{
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .group .right, .welfare .right {
+            background: #00B4FF;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            color: #fff;
+            margin-left: 20px;
+        }
+
+        .addgroup {
+            height: 30px;
+            line-height: 30px;
+            opacity: .8;
+        }
+
+         #company .edit {
+            display: block;
+             margin: 10px 0;
+        }
+    </style>
+</head>
+<style type="text/css" id="LAY_layadmin_theme"></style>
+<body>
+<h3 id="nodata" style="padding: 50px;text-align: center;display: block" >请先编辑认证信息</h3>
+<form class="content-right common" id="company">
+    <div class="title">品牌故事：</div>
+
+    <textarea id="demos" name="demos" style="display: none">请输入内容</textarea>
+<!--    <button type="button" class="layui-btn" id="getContent">获取编辑器内容</button>-->
+
+    <div class="title">品牌理念:</div>
+    <textarea name="" id="concept" style="width:100%;padding:8px;" rows="10" placeholder="请输入内容"></textarea>
+    <!--团队分布-->
+    <div class="title">团队分布:</div>
+    <div class="group">
+        <div class="items">
+            <div class="left">
+                <div class="name">
+                    <label>团队名字：</label>
+                    <input type="text" name="shopname" placeholder="请输入团队名字（如：赢在起点早教中心(宝山宝乐汇)）">
+                </div>
+                <div class="name">
+                    <label>团队地址：</label>
+                    <input type="text" name="address" placeholder="请输入地址（如：宝山区牡丹江路1569号宝乐汇3楼(宝杨路口)）">
+                </div>
+            </div>
+            <div class="right" id="right" onclick="deleteGroup(this)">x</div>
+        </div>
+    </div>
+    <button type="button" id="addGroup" class="layui-btn layui-btn-normal addgroup">添加团队分布</button>
+    <button type="button" id="getVal" class="layui-btn layui-btn-normal addgroup">获取团队分布值</button>
+    <!--到店福利-->
+    <div class="title">到店福利:</div>
+    <div class="welfare-content">
+        <div class="welfare">
+            <div class="left">
+                <div class="name">
+                    <label>福利内容：</label>
+                    <input type="text" name="welfarename" placeholder="请输入团队名字（如： 一对一儿童能力测评 1份）">
+                </div>
+                <div class="name">
+                    <label>福利价格：</label>
+                    <input type="text" name="welfareprice" placeholder="请输入价格">
+                    <label style="padding-left: 6px;">元</label>
+                </div>
+            </div>
+            <div class="right" id="delwelfare" onclick="deleteWelfare(this)">x</div>
+        </div>
+    </div>
+    <button type="button" id="addWelfare" class="layui-btn layui-btn-normal addgroup">添加到店福利</button>
+    <button type="button" id="getVals" class="layui-btn layui-btn-normal addgroup">获取团队分布值</button>
+
+    <button type="button" data-id="b" onclick="editCompany()" class="layui-btn layui-btn-normal edit">保存</button>
+</form>
+</body>
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../layui/layui.js?t=2"></script>
+<script type="text/javascript" src="../../assets/js/common.js?t=2"></script>
+<script type="text/javascript" src="../../assets/js/activity.js"></script>
+<script type="text/javascript">
+    //获取团队分布值
+    var arr = []
+    var welfare = []
+    function getVal() {
+        var inputVal = {}
+        console.log($(".items input").val())
+    }
+    $(function(){
+        $.ajax({
+            // contentType: 'application/json',
+            xhrFields: {
+                withCredentials: true
+            },
+            type:"get",
+            url:"http://192.168.2.173/apis/webuser/user/check_auth",
+            data: {
+                userId: '10793'
+            },
+            dataType:'json',
+            crossDomain: true,
+            success:function(data){
+                if (data.data == true) {
+                    $("#company").css("display",'block')
+                    $("#nodata").css("display",'none')
+                } else {
+                    $("#company").css("display",'none')
+                    $("#nodata").css("display",'block')
+                }
+            },
+            error:function(){
+                console.log('失败');
+            }
+        });
+    //    添加团队分布
+        $("#addGroup").click(function() {
+            var items = ''
+            items += `
+                  <div class="items">
+                    <div class="left">
+                        <div class="name">
+                            <label>团队名字：</label>
+                            <input type="text" name="shopname" placeholder="请输入团队名字（如：赢在起点早教中心(宝山宝乐汇)）">
+                        </div>
+                        <div class="name">
+                            <label>团队地址：</label>
+                            <input type="text" name="address" placeholder="请输入地址（如：宝山区牡丹江路1569号宝乐汇3楼(宝杨路口)）">
+                        </div>
+                    </div>
+                    <div class="right" id="right" onclick="deleteGroup(this)">x</div>
+                </div>`
+            $(".group").append(items)
+        })
+
+    //    获取团队分布值
+        $("#getVal").click(function() {
+            var j=0;
+            $(".items input[type='text']").each(function(){
+                if($(this).val()==""){
+                    j=j+1;
+                }
+            });
+            if (j>0) {
+                layer.msg('请输入完整团队')
+            } else {
+                arr = []
+                for (var i = 0;i<$(".items").size(); i++) {
+                    var inputname1 =  '.items:eq('+i+')'//店名
+                    var arrs = {'店名':$(inputname1+ " input[name=shopname]").val(),'地址':$(inputname1+ " input[name=address]").val()}
+                    arr.push(arrs)
+                    console.log(arr)
+                }
+            }
+        })
+
+    //    添加到店福利
+        $("#addWelfare").click(function() {
+            var items0 = ''
+            items0 += `
+                  <div class="welfare">
+                    <div class="left">
+                        <div class="name">
+                            <label>福利内容：</label>
+                            <input type="text" name="welfarename" placeholder="请输入团队名字（如： 一对一儿童能力测评 1份）">
+                        </div>
+                        <div class="name">
+                            <label>福利价格：</label>
+                            <input type="text" name="welfareprice" placeholder="请输入价格">
+                        </div>
+                    </div>
+                    <div class="right" id="delwelfare" onclick="deleteGroup(this)">x</div>
+                </div>`
+            $(".welfare-content").append(items0)
+        })
+
+        //    获取到店福利值
+        $("#getVals").click(function() {
+            var m=0;
+            var n =0;
+            var amtreg=/^\d+(\.\d{1,2})?$/;
+            $(".welfare-content input[name=welfarename]").each(function(){
+                if($(this).val()==""){
+                    m=m+1;
+                }
+            });
+            $(".welfare-content input[name=welfareprice]").each(function(){
+                if(!amtreg.test($(this).val())){
+                    n=n+1;
+                }
+            });
+            if (m>0) {
+                layer.msg('请输入福利内容')
+            } else if(n>0) {
+                layer.msg('请输入正确价格')
+            } else {
+                welfare = []
+                for (var i = 0;i<$(".welfare").size(); i++) {
+                    var inputname1 =  '.welfare:eq('+i+')'//店名
+                    var arrs0 = {'福利':$(inputname1+ " input[name=welfarename]").val(),'价格':$(inputname1+ " input[name=welfareprice]").val()}
+                    welfare.push(arrs0)
+                    console.log(welfare)
+                }
+            }
+        })
+    })
+    //删除团队分布地点
+    function deleteGroup(item) {
+        console.log($(item))
+        $(item).parent().remove()
+        arr = []
+    }
+
+    //删除到店福利
+    function deleteWelfare(item) {
+        console.log($(item))
+        $(item).parent().remove()
+        welfare = []
+    }
+    // 富文本编辑器
+    var content;
+    var layedit;
+    $(function () {
+        //初始化富文本框
+        layui.use('layedit', function () {
+            layedit = layui.layedit;
+            layedit.set({
+                uploadImage: {
+                    url: 'http://192.168.2.173/apis/activity/activity/upload_image',
+                    type: 'post'
+                }
+            });
+            content = layedit.build('demos');
+        });
+    });
+    // $('#getContent').on('click', function(){
+    //     console.log(layedit.getContent(content))
+    //     console.log(layedit.getText(content))
+    //
+    //     layedit.setContent(content,"你好");
+    // })
+
+    function editCompany() {
+        console.log(layedit.getContent(content))
+        $.ajax({
+            // contentType: 'application/json',
+            xhrFields: {
+                withCredentials: true
+            },
+            type:"post",
+            url:"http://192.168.2.173/apis/company/normal/upload_info_auth",
+            data: decodeURIComponent($("#company").serialize(),true),
+            dataType:'json',
+            crossDomain: true,
+            success:function(data){
+                console.log('***********')
+                console.log(data);
+            },
+            error:function(){
+                console.log('失败');
+            }
+        });
+    }
+</script>
+</html>
