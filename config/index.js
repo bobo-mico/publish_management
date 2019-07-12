@@ -1,8 +1,8 @@
 // http://publish.tuiguangbo.com/
 
 var config = {
-    api: 'http://192.168.2.173/apis', // 请求地址前缀
-    // api: 'http://publish.tuiguangbo.com',
+    // api: 'http://192.168.2.173/apis', // 请求地址前缀
+    api: 'http://publish.tuiguangbo.com',
     token: 'xxxx-xxx-xxxxx'
 }
 var http = {
