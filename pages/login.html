@@ -14,6 +14,7 @@
     <div class="title">登录</div>
     <form class="content" id="reg-form">
         <input type="text" name="type" value="email" style="display: none;">
+        <input type="text" name="origin" value="zbf" style="display: none;">
         <div class="item">
             <i class="layui-icon layui-icon-cellphone"></i>
             <input class="tel-val" type="text" name="username" placeholder="请输入邮箱">
@@ -43,25 +44,45 @@
             layer.msg('请输入密码');
         } else {
             console.log('提交')
-            $.ajax({
-                type:"post",
-                url: baseUrl + "/apis/user/login",
-                data: decodeURIComponent($("#reg-form").serialize(),true),
-                dataType:'json',
-                crossDomain: true,
-                // contentType: 'application/json',
-                xhrFields: {
-                  withCredentials: true
-                },
-                success:function(data){
-                    console.log('***********')
-                    console.log(data);
+            // $.ajax({
+            //     type:"post",
+            //     url: baseUrl + "/apis/user/login",
+            //     data: decodeURIComponent($("#reg-form").serialize(),true),
+            //     dataType:'json',
+            //     crossDomain: true,
+            //     // contentType: 'application/json',
+            //     xhrFields: {
+            //       withCredentials: true
+            //     },
+            //     success:function(data){
+            //         console.log('***********')
+            //         console.log(data);
+            //         window.location.href="../index.html"
+            //     },
+            //     error:function(){
+            //         console.log('失败');
+            //     }
+            // });
+
+            http.ajax({
+                url: '/user/login',
+                type: 'POST',
+                json: false,
+                mask: true, //是否有loading,
+                data: decodeURIComponent($("#reg-form").serialize(),true)
+            }).then(function(data){
+                console.log("登录成功")
+                console.log(data);
+                if(data.status == 0) {
                     window.location.href="../index.html"
-                },
-                error:function(){
-                    console.log('失败');
                 }
-            });
+                // 成功回调，data是成功回调参数
+            }, function(err){
+                console.log("登录失败")
+                console.log(err);
+                // 错误回调，err是错误回调参数
+                // 这里不处理错误也可以，上面都有集中处理错误，会tips
+            })
         }
     }
 //    去注册
